@@ -3,6 +3,7 @@
 
 #include "TapQuoteAPIDataType.h"
 #include "TapQuoteAPI.h"
+#include "Quote.h"
 
 #ifdef _WIN32
 
@@ -17,7 +18,7 @@
 extern "C" {
 #endif // __cplusplus
 
-	TAP_DLLEXPORT ITapQuoteAPI *TAP_CDECL CreateQuoteAPI(char *authCode, char *keyOperation);
+	TAP_DLLEXPORT ITapQuoteAPI *TAP_CDECL CreateQuoteAPI(const TapAPIApplicationInfo *appInfo, TAPIINT32 &iResult);
 
 	TAP_DLLEXPORT void TAP_CDECL FreeQuoteAPI(ITapQuoteAPI *apiObj);
 
@@ -70,27 +71,10 @@ extern "C" {
 		TAPICallOrPutFlagType	CallOrPutFlag2
 		);
 
-	TAP_DLLEXPORT void TAP_CDECL OnRspLoginNotify(ITapQuoteAPINotify *notifyObj, TAPIINT32 errorCode,
-		TAPISTR_20					UserNo,							///< 用户名
-		TAPIINT32					&UserType,						///< 用户类型
-		TAPISTR_20					UserName,						///< 昵称，GBK编码格式
-		//TAPISTR_20					QuoteTempPassword,			///< 行情临时密码
-		//TAPISTR_50					ReservedInfo,					///< 用户自己设置的预留信息
-		TAPISTR_40					LastLoginIP,					///< 上次登录的地址
-		TAPIUINT32					&LastLoginPort					///< 上次登录使用的端口
-		//TAPIDATETIME				LastLoginTime,					///< 上次登录的时间
-		//TAPIDATETIME				LastLogoutTime,					///< 上次退出的时间
-		//TAPIDATE					TradeDate,						///< 当前交易日期
-		//TAPIDATETIME				LastSettleTime,					///< 上次结算时间
-		//TAPIDATETIME				StartTime,						///< 系统启动时间
-		//TAPIDATETIME				InitTime						///< 系统初始化时间)
-	);
-	typedef void(*apiReadyCB)(void);
-	typedef void(*disconnectCB)(TAPIINT32);
-
-	TAP_DLLEXPORT void TAP_CDECL SetAPIReadyCB (Quote *quoteNotify, apiReadyCB cb);
-
-	TAP_DLLEXPORT void TAP_CDECL SetDisconnectCB(Quote *quoteNotify, disconnectCB cb, TAPIINT32 reasonCode);
+		TAP_DLLEXPORT void TAP_CDECL SetAPIReadyCB (Quote *quoteNotify, apiReadyCB cb);
+	TAP_DLLEXPORT void TAP_CDECL SetDisconnectCB(Quote *quoteNotify, disconnectCB cb);
+	TAP_DLLEXPORT void TAP_CDECL SetRspLoginCB(Quote *quoteNotify, rspLoginCB cb);
+	TAP_DLLEXPORT void TAP_CDECL SetRspQryCommodityCB(Quote *quoteNotify, rspQryCommodityCB cb);
 
 #ifdef __cplusplus
 }
