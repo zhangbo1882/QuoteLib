@@ -25,11 +25,13 @@ const TAPICHAR *TAP_CDECL GetQuoteAPIVersion()
 
 TAPIINT32 TAP_CDECL SetQuoteAPIDataPath(const TAPICHAR *path)
 {
+	cout << "[c++ context] dataPath: " << path << endl;
 	return SetTapQuoteAPIDataPath(path);
 }
 
 TAPIINT32 TAP_CDECL SetQuoteAPILogLevel(TAPILOGLEVEL level)
 {
+	cout << "[c++ context] loglevel: " << level << endl;
 	return SetTapQuoteAPILogLevel(level);
 }
 
