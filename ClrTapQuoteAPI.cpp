@@ -64,63 +64,20 @@ TAPIINT32 TAP_CDECL QryCommodityQuote(ITapQuoteAPI *apiObj, TAPIUINT32 *sessionI
 	return apiObj->QryCommodity(sessionID);
 }
 
-TAPIINT32 TAP_CDECL QryContractQuote(ITapQuoteAPI *apiObj,
-	TAPIUINT32				*sessionID,
-	TAPISTR_10              ExchangeNo,
-	TAPICommodityType		CommodityType,
-	TAPISTR_10				CommodityNo
-)
+TAPIINT32 TAP_CDECL QryContractQuote(ITapQuoteAPI *apiObj, TAPIUINT32 *sessionID, TapAPICommodity *qrqReq)
 {
-	struct TapAPICommodity commodity;
-	strncpy(commodity.ExchangeNo, ExchangeNo, 11);
-	commodity.CommodityType = CommodityType;
-	strncpy(commodity.CommodityNo, CommodityNo, 11);
-	return apiObj->QryContract(sessionID, &commodity);
+	return apiObj->QryContract(sessionID, qrqReq);
 }
 
-TAPIINT32 TAP_CDECL Subscribe(ITapQuoteAPI *apiObj,
-	TAPIUINT32 *sessionID,
-	TapAPICommodity			*Commodity,
-	TAPISTR_10				ContractNo1,
-	TAPISTR_10				StrikePrice1,
-	TAPICallOrPutFlagType	CallOrPutFlag1,
-	TAPISTR_10				ContractNo2,
-	TAPISTR_10				StrikePrice2,
-	TAPICallOrPutFlagType	CallOrPutFlag2
-)
+TAPIINT32 TAP_CDECL Subscribe(ITapQuoteAPI *apiObj,	TAPIUINT32 *sessionID, const TapAPIContract *contract)
 {
-	TapAPIContract contract;
-	strncpy(contract.ContractNo1, ContractNo1, 11);
-	strncpy(contract.StrikePrice1, StrikePrice1, 11);
-	strncpy(contract.ContractNo2, ContractNo2, 11);
-	strncpy(contract.StrikePrice2, StrikePrice2, 11);
-	contract.CallOrPutFlag1 = CallOrPutFlag1;
-	contract.CallOrPutFlag2 = CallOrPutFlag2;
-	contract.Commodity = *Commodity;
-
-	return apiObj->SubscribeQuote(sessionID, &contract);
+	return apiObj->SubscribeQuote(sessionID, contract);
 }
 
-TAPIINT32 TAP_CDECL UnSubscribe(ITapQuoteAPI *apiObj, 
-	TAPIUINT32 *sessionID, 
-	TapAPICommodity			*Commodity,
-	TAPISTR_10				ContractNo1,
-	TAPISTR_10				StrikePrice1,
-	TAPICallOrPutFlagType	CallOrPutFlag1,
-	TAPISTR_10				ContractNo2,
-	TAPISTR_10				StrikePrice2,
-	TAPICallOrPutFlagType	CallOrPutFlag2
-)
+TAPIINT32 TAP_CDECL UnSubscribe(ITapQuoteAPI *apiObj, TAPIUINT32 *sessionID, const TapAPIContract *contract)
 {
-	TapAPIContract contract;
-	strncpy(contract.ContractNo1, ContractNo1, 11);
-	strncpy(contract.StrikePrice1, StrikePrice1, 11);
-	strncpy(contract.ContractNo2, ContractNo2, 11);
-	strncpy(contract.StrikePrice2, StrikePrice2, 11);
-	contract.CallOrPutFlag1 = CallOrPutFlag1;
-	contract.CallOrPutFlag2 = CallOrPutFlag2;
-	contract.Commodity = *Commodity;
-	return apiObj->UnSubscribeQuote(sessionID, &contract);
+
+	return apiObj->UnSubscribeQuote(sessionID, contract);
 }
 
 
@@ -142,4 +99,24 @@ void TAP_CDECL SetRspLoginCB(Quote *quoteNotify, rspLoginCB cb)
 void TAP_CDECL SetRspQryCommodityCB(Quote *quoteNotify, rspQryCommodityCB cb)
 {
 	quoteNotify->_SetRspQryComodityCB(cb);
+}
+
+void TAP_CDECL SetRspQryContractCB(Quote *quoteNotify, rspQryContractCB cb)
+{
+	quoteNotify->_SetRspQryContractCB(cb);
+}
+
+void TAP_CDECL SetRspSubscribeQuoteCB(Quote *quoteNotify, rspSubscribeQuoteCB cb)
+{
+	quoteNotify->_SetRspSubscribeQuoteCB(cb);
+}
+
+void TAP_CDECL SetRspUnSubscribeQuoteCB(Quote *quoteNotify, rspUnSubscribeQuoteCB cb)
+{
+	quoteNotify->_SetRspUnSubscribeQuoteCB(cb);
+}
+
+void TAP_CDECL SetRtnQuoteCB(Quote *quoteNotify, rtnQuoteCB cb)
+{
+	quoteNotify->_SetRtnQuoteCB(cb);
 }

@@ -205,6 +205,19 @@ void TAP_CDECL Quote::OnRspQryContract(TAPIUINT32 sessionID, TAPIINT32 errorCode
 	Quote::RunRspQryContractCB(m_rspQryContractCB, sessionID, errorCode, isLast, info);
 }
 
+/*rspSubscribeCB*/
+void TAP_CDECL Quote::RunRspSubscribeQuoteCB(rspSubscribeQuoteCB cb, TAPIUINT32 sessionID, TAPIINT32 errorCode, TAPIYNFLAG isLast, const TapAPIQuoteWhole *info)
+{
+	if (cb != NULL)
+	{
+		cb(sessionID, errorCode, isLast, info);
+	}
+}
+
+void TAP_CDECL Quote::_SetRspSubscribeQuoteCB(rspSubscribeQuoteCB cb)
+{
+	m_rspSubscribeQuoteCB = cb;
+}
 
 void TAP_CDECL Quote::OnRspSubscribeQuote(TAPIUINT32 sessionID, TAPIINT32 errorCode, TAPIYNFLAG isLast, const TapAPIQuoteWhole *info)
 {
@@ -226,11 +239,41 @@ void TAP_CDECL Quote::OnRspSubscribeQuote(TAPIUINT32 sessionID, TAPIINT32 errorC
 	} else{
 		cout << "ÐÐÇé¶©ÔÄÊ§°Ü£¬´íÎóÂë£º" << errorCode <<endl;
 	}
+	Quote::RunRspSubscribeQuoteCB(m_rspSubscribeQuoteCB, sessionID, errorCode, isLast, info);
+}
+
+/*rspUnSubscribeCB*/
+void TAP_CDECL Quote::RunRspUnSubscribeQuoteCB(rspUnSubscribeQuoteCB cb, TAPIUINT32 sessionID, TAPIINT32 errorCode, TAPIYNFLAG isLast, const TapAPIContract *info)
+{
+	if (cb != NULL)
+	{
+		cb(sessionID, errorCode, isLast, info);
+	}
+}
+
+void TAP_CDECL Quote::_SetRspUnSubscribeQuoteCB(rspUnSubscribeQuoteCB cb)
+{
+	m_rspUnSubscribeQuoteCB = cb;
 }
 
 void TAP_CDECL Quote::OnRspUnSubscribeQuote(TAPIUINT32 sessionID, TAPIINT32 errorCode, TAPIYNFLAG isLast, const TapAPIContract *info)
 {
 	cout << __FUNCTION__ << " is called." << endl;
+	Quote::RunRspUnSubscribeQuoteCB(m_rspUnSubscribeQuoteCB, sessionID, errorCode, isLast, info);
+}
+
+/*rtnCB*/
+void TAP_CDECL Quote::RunRtnQuoteCB(rtnQuoteCB cb, const TapAPIQuoteWhole *info)
+{
+	if (cb != NULL)
+	{
+		cb(info);
+	}
+}
+
+void TAP_CDECL Quote::_SetRtnQuoteCB(rtnQuoteCB cb)
+{
+	m_rtnQuoteCB = cb;
 }
 
 void TAP_CDECL Quote::OnRtnQuote(const TapAPIQuoteWhole *info)
@@ -247,4 +290,5 @@ void TAP_CDECL Quote::OnRtnQuote(const TapAPIQuoteWhole *info)
 			// ...		
 			<<endl;
 	}
+	Quote::RunRtnQuoteCB(m_rtnQuoteCB, info);
 }

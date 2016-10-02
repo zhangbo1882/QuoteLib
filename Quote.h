@@ -61,9 +61,9 @@ public:
 	void TAP_CDECL _SetRspLoginCB(rspLoginCB cb);
 	void TAP_CDECL _SetRspQryComodityCB(rspQryCommodityCB cb);
 	void TAP_CDECL _SetRspQryContractCB(rspQryContractCB cb);
-	void TAP_CDECL _SeSubscribeQuoteCB(rspSubscribeQuoteCB cb);
-	void TAP_CDECL _SetUnSubscribeQuoteCB(rspUnSubscribeQuoteCB cb);
-	void TAP_CDECL _SetrtnQuoteCB(rtnQuoteCB cb);
+	void TAP_CDECL _SetRspSubscribeQuoteCB(rspSubscribeQuoteCB cb);
+	void TAP_CDECL _SetRspUnSubscribeQuoteCB(rspUnSubscribeQuoteCB cb);
+	void TAP_CDECL _SetRtnQuoteCB(rtnQuoteCB cb);
 
 private:
 	ITapQuoteAPI*	m_pAPI;

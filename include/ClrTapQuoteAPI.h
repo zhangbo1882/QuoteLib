@@ -42,39 +42,28 @@ extern "C" {
 
 	TAP_DLLEXPORT TAPIINT32 TAP_CDECL QryCommodityQuote(ITapQuoteAPI *apiObj, TAPIUINT32 *sessionID);
 
-	TAP_DLLEXPORT TAPIINT32 TAP_CDECL QryContractQuote(ITapQuoteAPI *apiObj,
-		TAPIUINT32				*sessionID,
-		TAPISTR_10              ExchangeNo,                             
-		TAPICommodityType		CommodityType,                          
-		TAPISTR_10				CommodityNo
-	);
+	TAP_DLLEXPORT TAPIINT32 TAP_CDECL QryContractQuote(ITapQuoteAPI *apiObj, TAPIUINT32 *sessionID, TapAPICommodity *qrqReq);
 
-	TAP_DLLEXPORT TAPIINT32 TAP_CDECL Subscribe(ITapQuoteAPI *apiObj,
-		TAPIUINT32 *sessionID,
-		TapAPICommodity			*Commodity,								
-		TAPISTR_10				ContractNo1,                            
-		TAPISTR_10				StrikePrice1,                           
-		TAPICallOrPutFlagType	CallOrPutFlag1,                        
-		TAPISTR_10				ContractNo2,                           
-		TAPISTR_10				StrikePrice2,                           
-		TAPICallOrPutFlagType	CallOrPutFlag2                         
-		);
+	TAP_DLLEXPORT TAPIINT32 TAP_CDECL Subscribe(ITapQuoteAPI *apiObj, TAPIUINT32 *sessionID, const TapAPIContract *contract);
 
-	TAP_DLLEXPORT TAPIINT32 TAP_CDECL UnSubscribe(ITapQuoteAPI *apiObj, 
-		TAPIUINT32 *sessionID,
-		TapAPICommodity			*Commodity,
-		TAPISTR_10				ContractNo1,
-		TAPISTR_10				StrikePrice1,
-		TAPICallOrPutFlagType	CallOrPutFlag1,
-		TAPISTR_10				ContractNo2,
-		TAPISTR_10				StrikePrice2,
-		TAPICallOrPutFlagType	CallOrPutFlag2
-		);
+	TAP_DLLEXPORT TAPIINT32 TAP_CDECL UnSubscribe(ITapQuoteAPI *apiObj, TAPIUINT32 *sessionID, const TapAPIContract *contract);
 
-		TAP_DLLEXPORT void TAP_CDECL SetAPIReadyCB (Quote *quoteNotify, apiReadyCB cb);
+	TAP_DLLEXPORT void TAP_CDECL SetAPIReadyCB (Quote *quoteNotify, apiReadyCB cb);
+	
 	TAP_DLLEXPORT void TAP_CDECL SetDisconnectCB(Quote *quoteNotify, disconnectCB cb);
+	
 	TAP_DLLEXPORT void TAP_CDECL SetRspLoginCB(Quote *quoteNotify, rspLoginCB cb);
+	
 	TAP_DLLEXPORT void TAP_CDECL SetRspQryCommodityCB(Quote *quoteNotify, rspQryCommodityCB cb);
+	
+	TAP_DLLEXPORT void TAP_CDECL SetRspQryContractCB(Quote *quoteNotify, rspQryContractCB cb);
+
+	TAP_DLLEXPORT void TAP_CDECL SetRspSubscribeQuoteCB(Quote *quoteNotify, rspSubscribeQuoteCB cb);
+
+	TAP_DLLEXPORT void TAP_CDECL SetRspUnSubscribeQuoteCB(Quote *quoteNotify, rspUnSubscribeQuoteCB cb);
+
+	TAP_DLLEXPORT void TAP_CDECL SetRtnQuoteCB(Quote *quoteNotify, rtnQuoteCB cb);
+
 
 #ifdef __cplusplus
 }
