@@ -179,8 +179,13 @@ void TAP_CDECL Quote::_SetRspQryComodityCB(rspQryCommodityCB cb)
 
 void TAP_CDECL Quote::OnRspQryCommodity(TAPIUINT32 sessionID, TAPIINT32 errorCode, TAPIYNFLAG isLast, const TapAPIQuoteCommodityInfo *info)
 {
-	cout << __FUNCTION__ << " is called." << endl;
-	cout << "[c++ context] isLast: " << isLast << endl;
+	//cout << __FUNCTION__ << " is called." << endl;
+	//cout << "[c++ context] isLast: " << isLast << endl;
+	//cout << "[c++ context] CommodityName:" << info->CommodityName << endl;
+	//cout << "[c++ context] CommodityEngName:" << info->CommodityEngName << endl;
+	//cout << "[c++ context] CommodityTickSize:" << info->CommodityTickSize << endl;
+	//cout << "[c++ context] CmbDirect:" << info->CmbDirect << endl;
+	//cout << "[c++ context] isDST:" << info->IsDST<< endl;
 	Quote::RunRspQryCommodityCB(m_rspQryCommodityCB, sessionID, errorCode, isLast, info);
 }
 
