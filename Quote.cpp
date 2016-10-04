@@ -111,15 +111,15 @@ void TAP_CDECL Quote::OnRspLogin(TAPIINT32 errorCode, const TapAPIQuotLoginRspIn
 	Quote::RunRspLoginCB(m_rspLoginCB, errorCode, info);
 
 	if(TAPIERROR_SUCCEED == errorCode) {
-		cout << "[c++ context] 登录成功，等待API初始化..." << endl;
+		//cout << "[c++ context] 登录成功，等待API初始化..." << endl;
 		m_bIsAPIReady = true;
-		cout << "[c++ context] 用户名:" << info->UserNo << endl;
-		cout << "[c++ context] 昵称:" << info->UserName << endl;
-		cout << "[c++ context] 上次登录IP:" << info->LastLoginIP << endl;
-		cout << "[c++ context] 系统启动时间:" << info->StartTime << endl;
+		//cout << "[c++ context] 用户名:" << info->UserNo << endl;
+		//cout << "[c++ context] 昵称:" << info->UserName << endl;
+		//cout << "[c++ context] 上次登录IP:" << info->LastLoginIP << endl;
+		//cout << "[c++ context] 系统启动时间:" << info->StartTime << endl;
 
 	} else {
-		cout << "[c++ context] 登录失败，错误码:" << errorCode << endl;
+		//cout << "[c++ context] 登录失败，错误码:" << errorCode << endl;
 		m_Event.SignalEvent();	
 	}
 }
@@ -140,7 +140,7 @@ void TAP_CDECL Quote::_SetAPIReadyCB(apiReadyCB cb)
 
 void TAP_CDECL Quote::OnAPIReady()
 {
-	cout << "[c++ context] API初始化完成" << endl;
+	//cout << "[c++ context] API初始化完成" << endl;
 	Quote::RunApiCB(m_apiReadyCB);
 	m_Event.SignalEvent();	
 }
@@ -160,7 +160,7 @@ void TAP_CDECL Quote::_SetDisconnectCB(disconnectCB cb)
 
 void TAP_CDECL Quote::OnDisconnect(TAPIINT32 reasonCode)
 {
-	cout << "[c++ context] API断开,断开原因:"<<reasonCode << endl;
+	//cout << "[c++ context] API断开,断开原因:"<<reasonCode << endl;
 	Quote::RunDisconnectCB(m_disconnectCB, reasonCode);
 }
 
@@ -205,8 +205,8 @@ void TAP_CDECL Quote::_SetRspQryContractCB(rspQryContractCB cb)
 
 void TAP_CDECL Quote::OnRspQryContract(TAPIUINT32 sessionID, TAPIINT32 errorCode, TAPIYNFLAG isLast, const TapAPIQuoteContractInfo *info)
 {
-	cout << __FUNCTION__ << " is called." << endl;
-	cout << "合约:" << info->Contract.Commodity.CommodityNo << info->Contract.ContractNo1 << endl;
+	//cout << __FUNCTION__ << " is called." << endl;
+	//cout << "合约:" << info->Contract.Commodity.CommodityNo << info->Contract.ContractNo1 << endl;
 	Quote::RunRspQryContractCB(m_rspQryContractCB, sessionID, errorCode, isLast, info);
 }
 
@@ -226,11 +226,13 @@ void TAP_CDECL Quote::_SetRspSubscribeQuoteCB(rspSubscribeQuoteCB cb)
 
 void TAP_CDECL Quote::OnRspSubscribeQuote(TAPIUINT32 sessionID, TAPIINT32 errorCode, TAPIYNFLAG isLast, const TapAPIQuoteWhole *info)
 {
+#if 0
 	if (TAPIERROR_SUCCEED == errorCode)
 	{
 		cout << "行情订阅成功 ";
 		if (NULL != info)
 		{
+
 			cout << info->DateTimeStamp << " "
 				<< info->Contract.Commodity.ExchangeNo << " "
 				<< info->Contract.Commodity.CommodityType << " "
@@ -239,11 +241,13 @@ void TAP_CDECL Quote::OnRspSubscribeQuote(TAPIUINT32 sessionID, TAPIINT32 errorC
 				<< info->QLastPrice
 				// ...		
 				<<endl;
+
 		}
 
 	} else{
 		cout << "行情订阅失败，错误码：" << errorCode <<endl;
 	}
+#endif
 	Quote::RunRspSubscribeQuoteCB(m_rspSubscribeQuoteCB, sessionID, errorCode, isLast, info);
 }
 
@@ -263,7 +267,7 @@ void TAP_CDECL Quote::_SetRspUnSubscribeQuoteCB(rspUnSubscribeQuoteCB cb)
 
 void TAP_CDECL Quote::OnRspUnSubscribeQuote(TAPIUINT32 sessionID, TAPIINT32 errorCode, TAPIYNFLAG isLast, const TapAPIContract *info)
 {
-	cout << __FUNCTION__ << " is called." << endl;
+	//cout << __FUNCTION__ << " is called." << endl;
 	Quote::RunRspUnSubscribeQuoteCB(m_rspUnSubscribeQuoteCB, sessionID, errorCode, isLast, info);
 }
 
@@ -283,6 +287,7 @@ void TAP_CDECL Quote::_SetRtnQuoteCB(rtnQuoteCB cb)
 
 void TAP_CDECL Quote::OnRtnQuote(const TapAPIQuoteWhole *info)
 {
+#if 0
 	if (NULL != info)
 	{
 		cout << "行情更新:" 
@@ -295,5 +300,6 @@ void TAP_CDECL Quote::OnRtnQuote(const TapAPIQuoteWhole *info)
 			// ...		
 			<<endl;
 	}
+#endif
 	Quote::RunRtnQuoteCB(m_rtnQuoteCB, info);
 }
